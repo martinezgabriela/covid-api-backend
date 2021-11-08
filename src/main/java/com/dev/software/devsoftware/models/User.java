@@ -1,12 +1,16 @@
 package com.dev.software.devsoftware.models;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="TB_USER")
@@ -16,19 +20,33 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	private Long id;
 	
 	private String nome;
 	
 	private String email;
 	
 	private String senha;
+	
+	@OneToMany(mappedBy="user")
+	@JsonIgnoreProperties("user")
+	private Set<FavoriteHospital> favoriteHospital;
 
-	public long getId() {
+	
+
+	public Set<FavoriteHospital> getFavoriteHospital() {
+		return favoriteHospital;
+	}
+
+	public void setFavoriteHospital(Set<FavoriteHospital> favoriteHospital) {
+		this.favoriteHospital = favoriteHospital;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

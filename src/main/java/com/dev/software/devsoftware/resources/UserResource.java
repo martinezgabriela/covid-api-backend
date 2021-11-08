@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dev.software.devsoftware.models.FavoriteHospital;
 import com.dev.software.devsoftware.models.User;
 import com.dev.software.devsoftware.models.api.ApiResponse;
 import com.dev.software.devsoftware.models.api.HospitalList;
@@ -48,6 +49,10 @@ public class UserResource {
 		System.out.println(response);
 		return ResponseEntity.ok(response);
 	}
+	
+	
+	
+	
 	
 	
 	
