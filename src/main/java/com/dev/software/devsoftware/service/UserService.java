@@ -12,6 +12,7 @@ import com.dev.software.devsoftware.models.api.ApiResponse;
 import com.dev.software.devsoftware.models.api.Hospital;
 import com.dev.software.devsoftware.models.api.HospitalList;
 import com.dev.software.devsoftware.models.api.request.ApiRequest;
+import com.dev.software.devsoftware.models.api.request.ApiRequestBuilder;
 import com.dev.software.devsoftware.models.api.request.Match;
 import com.dev.software.devsoftware.models.api.request.Query;
 import com.dev.software.devsoftware.models.dto.HospitalsResponse;
@@ -27,12 +28,14 @@ public class UserService {
 	public ArrayList<HospitalList> getDataApi() {
 
 		ApiRequest request = new ApiRequest();
-		Match match = new Match();
-		match.setMunicipio("Porto Alegre");
-		Query query = new Query();
-		query.setMatch(match);
-		request.setQuery(query);
-		request.setSize(5000);
+		//Match match = new Match();
+		//match.setMunicipio("Porto Alegre");
+		//Query query = new Query();
+		//query.setMatch(match);
+		//request.setQuery(query);
+		//request.setSize(5000);
+		ApiRequestBuilder builder = new ApiRequestBuilder();
+		request = builder.apiRequestBuilder(5000, "Florianópolis");
 
 		Mono<ApiResponse> monoResponse = this.webClient.method(HttpMethod.GET).contentType(MediaType.APPLICATION_JSON).bodyValue(request).retrieve().bodyToMono(ApiResponse.class);
 		ApiResponse response = monoResponse.block();

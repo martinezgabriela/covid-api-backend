@@ -28,8 +28,7 @@ public class UserResource {
 	UserRepository userRepository;
 	
 	@Autowired
-	UserService userService;
-	
+	UserService userService;	
 	
 	
 	@PostMapping("/user")
@@ -46,7 +45,6 @@ public class UserResource {
 	@GetMapping("/hospitais")
 	public ResponseEntity<ArrayList<HospitalList>> getApiInfo(){
 		ArrayList<HospitalList> response = userService.getDataApi();
-		System.out.println(response);
 		return ResponseEntity.ok(response);
 	}
 	
