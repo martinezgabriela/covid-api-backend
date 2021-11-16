@@ -1,4 +1,4 @@
-package com.dev.software.devsoftware.resources;
+package com.dev.software.devsoftware.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,16 +13,16 @@ import com.dev.software.devsoftware.repository.FavoriteHospitalRepository;
 
 @RestController
 @RequestMapping(value="/api")
-public class FavoriteHospitalResource {
-	
+public class FavoriteHospitalController {
+
 	@Autowired
 	FavoriteHospitalRepository favoriteHospitalRepository;
-	
+
 	@PostMapping("/favorite")
 	public FavoriteHospital saveFavoriteHospital(@RequestBody FavoriteHospital favoriteHospital) {
 		return favoriteHospitalRepository.save(favoriteHospital);
 	}
-	
+
 	@DeleteMapping("/favorite/{id}")
 	public void unfavoriteHospital(@PathVariable Long id) {
 		favoriteHospitalRepository.deleteById(id);

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Radar Leitos Covid-19</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    <form class="form-signin" method="POST" th:action="@{/login}">
+        <h2 class="form-heading">Radar Leitos Covid-19</h2>
+
+        <div class="form-group">
+            <input name="email" type="text" class="form-control" placeholder="Email" autofocus="true"/>
+            <input name="senha" type="password" class="form-control" placeholder="Senha"/>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+
+            <h4 class="text-center"><a href="/registration">Registrar um novo usuário</a></h4>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
