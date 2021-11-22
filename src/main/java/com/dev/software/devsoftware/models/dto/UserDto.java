@@ -1,11 +1,11 @@
 package com.dev.software.devsoftware.models.dto;
 
 public class UserDto {
-	
+
 	private String nome;
-	
+
 	private String email;
-	
+
 	private String senha;
 
 	public String getNome() {
@@ -32,4 +32,7 @@ public class UserDto {
 		this.senha = senha;
 	}
 
+	public boolean validate(String email, String senha) {
+		return email.equals(this.email) && senha.equals(this.senha);
+	}
 }

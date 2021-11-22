@@ -2,6 +2,7 @@ package com.dev.software.devsoftware.controllers;
 
 
 import com.dev.software.devsoftware.models.User;
+import com.dev.software.devsoftware.models.dto.UserDto;
 import com.dev.software.devsoftware.repository.UserRepository;
 import com.dev.software.devsoftware.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
@@ -27,13 +27,33 @@ public class UserController {
 		return "login";
 	}
 
-	@RequestMapping("/login.html")
+	@GetMapping("/login")
 	public String showLoginForm() {
 		return "login.html";
 	}
 
-	@RequestMapping("/login-error.html")
-	public String loginFormWithError(Model model) {
+	@PostMapping("/login")
+	public String tryToLogin(@Valid User user, Model model) {
+		// procurar usuario no banco
+		User userFound = userRepository.findByEmail(user.getEmail());
+
+		// se usuário informado tiver email e senha compativeis
+		if(userFound != null){
+			// preparar usuário encontrado
+			UserDto userDto = new UserDto();
+			userDto.setEmail(userFound.getEmail());
+			userDto.setSenha(userFound.getSenha());
+
+			if(userDto.validate(user.getEmail(), user.getSenha())) {
+				return "redirect:/list-hospitals";
+			}
+		}
+
+		return "redirect:/index";
+	}
+
+	@GetMapping("/login-error")
+	public String loginErrors(Model model) {
 		model.addAttribute("loginError", true);
 		return "login.html";
 	}
@@ -45,25 +65,17 @@ public class UserController {
 
 	@PostMapping("/registration")
 	public String addUser(@Valid User user, Model model) {
-		// validation
+		// validation pode ser extraido depois
+		if(user.getNome() != null && user.getEmail() != null && user.getSenha() != null){
+			userRepository.save(user);
 
-		userRepository.save(user);
+		}
 		return "redirect:/index";
 	}
 /*
 
 
-	@PostMapping("/login")
-	public String tryToLogin(@Valid User user, BindingResult result) {
-		//loginError
 
-		//userValidationService.validateUser(user)
-		if(userRepository.findByEmail(user.getEmail())!=null)){
-			return "redirect:/list-hospitals";
-		}
-
-		return "redirect:/registration";
-	}
 
 	@GetMapping({"/list-hospitals"})
 	public String listHospitals() {
