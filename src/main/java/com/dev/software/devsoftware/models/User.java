@@ -1,7 +1,6 @@
 package com.dev.software.devsoftware.models;
 
-import java.io.Serializable;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,30 +8,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name="TB_USER")
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	
+
 	private String nome;
-	
+
 	private String email;
-	
+
 	private String senha;
-	
+
 	@OneToMany(mappedBy="user")
 	@JsonIgnoreProperties("user")
 	private Set<FavoriteHospital> favoriteHospital;
-
-	
 
 	public Set<FavoriteHospital> getFavoriteHospital() {
 		return favoriteHospital;
@@ -73,9 +70,4 @@ public class User implements Serializable{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	
-	
-	
-
 }

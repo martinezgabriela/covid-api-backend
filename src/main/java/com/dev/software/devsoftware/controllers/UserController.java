@@ -1,28 +1,19 @@
 package com.dev.software.devsoftware.controllers;
 
 
-import java.util.ArrayList;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.dev.software.devsoftware.models.User;
-import com.dev.software.devsoftware.models.api.HospitalList;
-import com.dev.software.devsoftware.models.dto.UserDto;
 import com.dev.software.devsoftware.repository.UserRepository;
 import com.dev.software.devsoftware.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
 @Controller
-//@RequestMapping(value="/api")
 public class UserController {
 
 	@Autowired
@@ -36,20 +27,15 @@ public class UserController {
 		return "login";
 	}
 
-	@PostMapping("/login")
-	public String login(@Valid User user) {
-		if(user.getEmail().isEmpty() && user.getSenha().isEmpty()) {
-			return "login";
-		}
-		if(userRepository.findByEmail(user.getEmail())!=null) {
-			return "redirect:/list-hospitals";
-		}
-		return "redirect:/registration";
+	@RequestMapping("/login.html")
+	public String showLoginForm() {
+		return "login.html";
 	}
 
-	@GetMapping({"/list-hospitals"})
-	public String listHospitals() {
-		return "list-hospitals";
+	@RequestMapping("/login-error.html")
+	public String loginFormWithError(Model model) {
+		model.addAttribute("loginError", true);
+		return "login.html";
 	}
 
 	@GetMapping("/registration")
@@ -58,16 +44,33 @@ public class UserController {
 	}
 
 	@PostMapping("/registration")
-	public String addUser(@Valid User user, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "registration";
-		}
+	public String addUser(@Valid User user, Model model) {
+		// validation
 
 		userRepository.save(user);
 		return "redirect:/index";
 	}
-
 /*
+
+
+	@PostMapping("/login")
+	public String tryToLogin(@Valid User user, BindingResult result) {
+		//loginError
+
+		//userValidationService.validateUser(user)
+		if(userRepository.findByEmail(user.getEmail())!=null)){
+			return "redirect:/list-hospitals";
+		}
+
+		return "redirect:/registration";
+	}
+
+	@GetMapping({"/list-hospitals"})
+	public String listHospitals() {
+		return "list-hospitals";
+	}
+
+
 	// Login form with error
 	@RequestMapping("/login-error.html")
 	public String loginError(Model model) {
@@ -78,12 +81,12 @@ public class UserController {
 
 
 
-*/
+
 	//@PostMapping("/user")
 	//public User saveUser(@RequestBody User user) {
 	//	return userRepository.save(user);
 	//}
-/*
+
 	@PostMapping(path = "/uservalidates")
 	public String validatesUser(@RequestBody UserDto userDto) {
 		String email = userDto.getEmail();
