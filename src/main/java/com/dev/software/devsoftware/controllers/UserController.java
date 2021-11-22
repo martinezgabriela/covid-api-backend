@@ -29,7 +29,7 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String showLoginForm() {
-		return "login.html";
+		return "login";
 	}
 
 	@PostMapping("/login")
@@ -48,8 +48,8 @@ public class UserController {
 				return "redirect:/list-hospitals";
 			}
 		}
-
-		return "redirect:/index";
+		model.addAttribute("loginError", true);
+		return "redirect:/login-error";
 	}
 
 	@GetMapping("/login-error")
