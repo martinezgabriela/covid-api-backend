@@ -2,6 +2,7 @@ package com.dev.software.devsoftware.controllers;
 
 
 import com.dev.software.devsoftware.models.User;
+import com.dev.software.devsoftware.models.api.HospitalList;
 import com.dev.software.devsoftware.models.dto.UserDto;
 import com.dev.software.devsoftware.repository.UserRepository;
 import com.dev.software.devsoftware.service.UserService;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 public class UserController {
@@ -44,6 +47,7 @@ public class UserController {
 			userDto.setEmail(userFound.getEmail());
 			userDto.setSenha(userFound.getSenha());
 
+			// validar
 			if(userDto.validate(user.getEmail(), user.getSenha())) {
 				return "redirect:/list-hospitals";
 			}
@@ -64,7 +68,7 @@ public class UserController {
 	}
 
 	@PostMapping("/registration")
-	public String addUser(@Valid User user, Model model) {
+	public String addUser(@Valid User user) {
 		// validation pode ser extraido depois
 		if(user.getNome() != null && user.getEmail() != null && user.getSenha() != null){
 			userRepository.save(user);
@@ -72,41 +76,14 @@ public class UserController {
 		}
 		return "redirect:/index";
 	}
-/*
-
-
-
 
 	@GetMapping({"/list-hospitals"})
-	public String listHospitals() {
+	public String listHospitals(Model model) {
+		ArrayList<HospitalList> hospitals = userService.getDataApi();
+		model.addAttribute("hospitals", hospitals);
 		return "list-hospitals";
 	}
-
-
-	// Login form with error
-	@RequestMapping("/login-error.html")
-	public String loginError(Model model) {
-		model.addAttribute("loginError", true);
-		return "login.html";
-	}
-
-
-
-
-
-	//@PostMapping("/user")
-	//public User saveUser(@RequestBody User user) {
-	//	return userRepository.save(user);
-	//}
-
-	@PostMapping(path = "/uservalidates")
-	public String validatesUser(@RequestBody UserDto userDto) {
-		String email = userDto.getEmail();
-		if(userRepository.findByEmail(email)!=null) {
-			return "redirect:/list-hospitals";
-		}
-		return "redirec:/index";
-	}
+/*
 	@GetMapping("/hospitais")
 	public ResponseEntity<ArrayList<HospitalList>> getApiInfo(){
 		ArrayList<HospitalList> response = userService.getDataApi();
