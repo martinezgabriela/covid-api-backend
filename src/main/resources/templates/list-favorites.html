@@ -18,9 +18,11 @@
                 <div class="row">
                     <a href="list-hospitals">Voltar à lista completa</a>
                 </div>
-                <div class="row" th:each="hospital: *{hospitals}">
-                    <span th:text="*{hospital.get_source().getNomeCnes()}"></span>
-                </div>
+<!--                <div class="row" th:each="hospital: *{hospitals}">-->
+<!--                    <span th:text="*{hospital.get_source().getNomeCnes()}"></span>-->
+<!--                </div>-->
+                <span th:text="*{hospitalName}"></span>
+                <span th:text="*{user.getEmail()}"></span>
             </div>
         </div>
     </body>

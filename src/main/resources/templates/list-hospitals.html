@@ -19,20 +19,20 @@
                 <a href="list-favorites">Lista de hospitais favoritados</a>
             </div>
             <!--type="hidden"-->
-            <span th:text="*{user.getEmail()}"></span>
+            <span type="hidden" th:text="*{user.getEmail()}"></span>
 
             <div class="row" th:each="hospital: *{hospitals}">
 
                 <form method="POST" th:action="@{/favorite-hospital}">
-                    <button class="btn" type="submit">[favoritar]</button>
+                    <button class="btn" type="submit">[ favoritar ]</button>
                     <label>
-                        <input type="text" name="userEmail" th:value="*{user.getEmail()}"/>
+                        <input type="hidden" name="userEmail" th:value="*{user.getEmail()}"/>
                     </label>
                     <label>
-                        <input type="text" name="hospitalName" th:value="*{hospital.get_source().getNomeCnes()}"/>
+                        <input type="text" name="hospitalName" th:value="*{hospital.get_source().getNomeCnes()}" readonly/>
                     </label>
                     <label>
-                        <input type="text" name="score" th:value="${#numbers.formatDecimal(hospital.get_score(), 0, 'COMMA', 2, 'POINT')}"/>%
+                        <input type="text" name="score" th:value="${#numbers.formatDecimal(hospital.get_score(), 0, 'COMMA', 2, 'POINT')}" readonly/>%
                     </label>
                 </form>
 
