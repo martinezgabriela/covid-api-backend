@@ -26,7 +26,10 @@
                 <form method="POST" th:action="@{/favorite-hospital}">
                     <button class="btn" type="submit">[favoritar]</button>
                     <label>
-                        <input type="text" name="hospital" th:value="*{hospital.get_source().getNomeCnes()}"/>
+                        <input type="text" name="userEmail" th:value="*{user.getEmail()}"/>
+                    </label>
+                    <label>
+                        <input type="text" name="hospitalName" th:value="*{hospital.get_source().getNomeCnes()}"/>
                     </label>
                     <label>
                         <input type="text" name="score" th:value="${#numbers.formatDecimal(hospital.get_score(), 0, 'COMMA', 2, 'POINT')}"/>%
