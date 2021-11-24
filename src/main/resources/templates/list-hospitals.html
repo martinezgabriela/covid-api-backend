@@ -9,28 +9,34 @@
 
     <body>
         <div class="container">
-            <h2 class="form-heading">Hospitais</h2>
-            <div class="container">
-                <div class="row">
-                    <span class="form-heading">Porcentagem de leitos ocupados por hospital em Porto Alegre</span>
-                </div>
-                <div class="row">
-                    <a href="list-favorites">Lista de hospitais favoritados</a>
-                </div>
-                <div class="row" th:each="hospital: *{hospitals}">
-                    <div class="p-2">
-                        <a href="favorite-hospital">[favoritar]</a>
-                    </div>
-                    <div class="p-2">
-                        <span th:text="*{hospital.get_source().getNomeCnes()}"></span>
-                    </div>
-                    <div class="p-2">
-                        <span th:text="${#numbers.formatDecimal(hospital.get_score(), 0, 'COMMA', 2, 'POINT')}"></span>%
-                    </div>
-                </div>
-                <div class="row">
-                    <a href="/">Voltar à página inicial</a>
-                </div>
+            <div class="row">
+                <h2 class="form-heading">Radar Leitos Covid-19</h2>
+            </div>
+            <div class="row">
+                <span class="form-heading">Porcentagem de leitos ocupados por hospital em Porto Alegre</span>
+            </div>
+            <div class="row">
+                <a href="list-favorites">Lista de hospitais favoritados</a>
+            </div>
+            <!--type="hidden"-->
+            <span th:text="*{user.getEmail()}"></span>
+
+            <div class="row" th:each="hospital: *{hospitals}">
+
+                <form method="POST" th:action="@{/favorite-hospital}">
+                    <button class="btn" type="submit">[favoritar]</button>
+                    <label>
+                        <input type="text" name="hospital" th:value="*{hospital.get_source().getNomeCnes()}"/>
+                    </label>
+                    <label>
+                        <input type="text" name="score" th:value="${#numbers.formatDecimal(hospital.get_score(), 0, 'COMMA', 2, 'POINT')}"/>%
+                    </label>
+                </form>
+
+            </div>
+
+            <div class="row">
+                <a href="/">Voltar à página inicial</a>
             </div>
         </div>
     </body>

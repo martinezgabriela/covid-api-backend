@@ -13,23 +13,13 @@
             <div class="container">
                 <div class="row">
                     <span class="form-heading">Porcentagem de leitos ocupados por hospital em Porto Alegre</span>
+                    <span class="form-heading">Lista de hospitais favoritados</span>
                 </div>
                 <div class="row">
-                    <a href="list-favorites">Lista de hospitais favoritados</a>
+                    <a href="list-hospitals">Voltar à lista completa</a>
                 </div>
                 <div class="row" th:each="hospital: *{hospitals}">
-                    <div class="p-2">
-                        <a href="favorite-hospital">[favoritar]</a>
-                    </div>
-                    <div class="p-2">
-                        <span th:text="*{hospital.get_source().getNomeCnes()}"></span>
-                    </div>
-                    <div class="p-2">
-                        <span th:text="${#numbers.formatDecimal(hospital.get_score(), 0, 'COMMA', 2, 'POINT')}"></span>%
-                    </div>
-                </div>
-                <div class="row">
-                    <a href="/">Voltar à página inicial</a>
+                    <span th:text="*{hospital.get_source().getNomeCnes()}"></span>
                 </div>
             </div>
         </div>

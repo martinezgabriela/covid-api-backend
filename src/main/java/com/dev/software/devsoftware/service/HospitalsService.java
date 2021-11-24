@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 
 @Service
-public class UserService {
+public class HospitalsService {
 
 	@Autowired
 	private WebClient webClient;
